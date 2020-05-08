@@ -18,10 +18,11 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<Restaurant> getAll();
 
     @Query("SELECT DISTINCT r FROM Restaurant r " +
+            "LEFT JOIN FETCH r.votes vote " +
             "JOIN FETCH r.menus menu " +
             "JOIN FETCH menu.meals meal " +
             "WHERE menu.date=:date")
-    List<Restaurant> getAllWithTodayMenu(@Param("date") LocalDate date);
+    List<Restaurant> getAllWithTodayMenuMealsAndVotes(@Param("date") LocalDate date);
 
     @Query("SELECT DISTINCT r FROM Restaurant r " +
             "JOIN FETCH r.menus menu " +
@@ -29,7 +30,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     Restaurant getOneWithTodayMenu(@Param("date") LocalDate date, @Param("restaurantId") int restaurantId);
 
     @Query("SELECT DISTINCT r FROM Restaurant r " +
-            "JOIN FETCH r.votes vote " +
+            "LEFT JOIN FETCH r.votes vote " +
             "JOIN FETCH r.menus menu " +
             "JOIN FETCH menu.meals meal ")
     List<Restaurant> getAllWithVotesAndMenus();

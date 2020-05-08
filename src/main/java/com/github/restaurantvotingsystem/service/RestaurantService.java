@@ -42,8 +42,8 @@ public class RestaurantService {
         return meals;
     }
 
-    public List<Restaurant> getAllWithTodayMenu() {
-       return restaurantRepository.getAllWithTodayMenu(LocalDate.now());
+    public List<Restaurant> getAllWithTodayMenuAndMeals() {
+       return restaurantRepository.getAllWithTodayMenuAndMeals(LocalDate.now());
     }
 
     public List<Restaurant> getAllWithVotesAndMenus() {

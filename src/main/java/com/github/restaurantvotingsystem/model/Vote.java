@@ -20,7 +20,7 @@ public class Vote extends AbstractBaseEntity {
 
     @Column(name = "time", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    private LocalTime time = LocalTime.now();
+    private LocalTime time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
