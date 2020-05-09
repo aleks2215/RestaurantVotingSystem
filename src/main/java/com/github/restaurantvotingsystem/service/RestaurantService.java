@@ -1,16 +1,14 @@
 package com.github.restaurantvotingsystem.service;
 
-import com.github.restaurantvotingsystem.model.Meal;
-import com.github.restaurantvotingsystem.model.Menu;
-import com.github.restaurantvotingsystem.model.Restaurant;
-import com.github.restaurantvotingsystem.repository.MealRepository;
-import com.github.restaurantvotingsystem.repository.MenuRepository;
-import com.github.restaurantvotingsystem.repository.RestaurantRepository;
+import com.github.restaurantvotingsystem.model.*;
+import com.github.restaurantvotingsystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,26 +27,92 @@ public class RestaurantService {
     @Autowired
     private MealRepository mealRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
+
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();
     }
 
+    @Transactional
+    public Restaurant save(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
+
+    @Transactional
+    public Menu saveMenu(Menu menu, int restaurantId) {
+        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
+        return menuRepository.save(menu);
+    }
+
+
     public List<Meal> getAllMeals() {
         List<Meal> meals = mealRepository.getAllMealsForMenu(100004);
         meals.forEach(meal -> {
-                    meal.setMenu(null);
-                });
+            meal.setMenu(null);
+        });
 
         return meals;
     }
 
-    public List<Restaurant> getAllWithTodayMenuAndMeals() {
-       return restaurantRepository.getAllWithTodayMenuAndMeals(LocalDate.now());
-    }
+//    public List<Restaurant> getAllWithTodayMenuAndMeals() {
+//        restaurantRepository.findAll()
+//        return restaurantRepository.getAllWithTodayMenuAndMeals(LocalDate.now());
+//    }
 
-    public List<Restaurant> getAllWithVotesAndMenus() {
-        return restaurantRepository.getAllWithVotesAndMenus();
-    }
+//    public List<Restaurant> getAllWithVotesAndMenus() {
+//        return restaurantRepository.getAllWithVotesAndMenus();
+//    }
+
+//    public Vote create(int userId, int restaurantId) {
+//        LocalDate currentDate = LocalDate.now();
+//        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, restaurantId);
+//        if (restaurantWithTodayMenu == null) {
+//            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
+//        }
+//        LocalTime currentTime = LocalTime.now();
+//        LocalTime voteLimit = LocalTime.of(11, 0, 0);
+//        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
+//        User user = userRepository.findById(userId).orElseThrow();
+//        Vote newVote = new Vote(currentDate, user, restaurantWithTodayMenu);
+//        Vote savedVote;
+//        if (todayVoteFromDb == null) {
+//            savedVote = voteRepository.save(newVote);
+//        } else if (currentTime.isBefore(voteLimit)) {
+//            voteRepository.delete(todayVoteFromDb);
+//            savedVote = voteRepository.save(newVote);
+//        } else {
+//            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
+//        }
+//
+//    }
+
+//    public Vote update(int userId, int restaurantId) {
+//        LocalDate currentDate = LocalDate.now();
+//        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, restaurantId);
+//        if (restaurantWithTodayMenu == null) {
+//            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
+//        }
+//        LocalTime currentTime = LocalTime.now();
+//        LocalTime voteLimit = LocalTime.of(11, 0, 0);
+//        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
+//        User user = userRepository.findById(userId).orElseThrow();
+//        Vote newVote = new Vote(currentDate, currentTime, user, restaurantWithTodayMenu);
+//        Vote savedVote;
+//        if (todayVoteFromDb == null) {
+//            savedVote = voteRepository.save(newVote);
+//        } else if (currentTime.isBefore(voteLimit)) {
+//            voteRepository.delete(todayVoteFromDb);
+//            savedVote = voteRepository.save(newVote);
+//        } else {
+//            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
+//        }
+//
+//    }
+
 
 //    List<Restaurant> restaurants = restaurantRepository.findAll();
 //        restaurants.forEach(restaurant -> {

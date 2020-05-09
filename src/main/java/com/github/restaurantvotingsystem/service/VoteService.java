@@ -24,49 +24,49 @@ public class VoteService {
     @Autowired
     private VoteRepository voteRepository;
 
-    public void addOrReplace(int userId, int restaurantId) {
-        LocalDate currentDate = LocalDate.now();
-        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, restaurantId);
-        if (restaurantWithTodayMenu == null) {
-            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
-        }
-        LocalTime currentTime = LocalTime.now();
-        LocalTime voteLimit = LocalTime.of(11, 0, 0);
-        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
-        User user = userRepository.findById(userId).orElseThrow();
-        Vote newVote = new Vote(currentDate, currentTime, user, restaurantWithTodayMenu);
-        Vote savedVote;
-        if (todayVoteFromDb == null) {
-            savedVote = voteRepository.save(newVote);
-        } else if (currentTime.isBefore(voteLimit)) {
-            voteRepository.delete(todayVoteFromDb);
-            savedVote = voteRepository.save(newVote);
-        } else {
-            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
-        }
-
-    }
-
-    public Vote create(Vote vote, int userId) {
-        LocalDate currentDate = LocalDate.now();
-        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, 10);
-        if (restaurantWithTodayMenu == null) {
-            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
-        }
-        LocalTime currentTime = LocalTime.now();
-        LocalTime voteLimit = LocalTime.of(11, 0, 0);
-        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
-        User user = userRepository.findById(userId).orElseThrow();
-        Vote newVote = new Vote(currentDate, currentTime, user, restaurantWithTodayMenu);
-        Vote savedVote;
-        if (todayVoteFromDb == null) {
-            savedVote = voteRepository.save(newVote);
-        } else if (currentTime.isBefore(voteLimit)) {
-            voteRepository.delete(todayVoteFromDb);
-            savedVote = voteRepository.save(newVote);
-        } else {
-            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
-        }
-return vote;
-    }
+    //    public void addOrReplace(int userId, int restaurantId) {
+//        LocalDate currentDate = LocalDate.now();
+//        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, restaurantId);
+//        if (restaurantWithTodayMenu == null) {
+//            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
+//        }
+//        LocalTime currentTime = LocalTime.now();
+//        LocalTime voteLimit = LocalTime.of(11, 0, 0);
+//        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
+//        User user = userRepository.findById(userId).orElseThrow();
+//        Vote newVote = new Vote(currentDate, currentTime, user, restaurantWithTodayMenu);
+//        Vote savedVote;
+//        if (todayVoteFromDb == null) {
+//            savedVote = voteRepository.save(newVote);
+//        } else if (currentTime.isBefore(voteLimit)) {
+//            voteRepository.delete(todayVoteFromDb);
+//            savedVote = voteRepository.save(newVote);
+//        } else {
+//            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
+//        }
+//
+//    }
+//
+//    public Vote create(Restaurant restaurant, int userId) {
+//        LocalDate currentDate = LocalDate.now();
+//        Restaurant restaurantWithTodayMenu = restaurantRepository.getOneWithTodayMenu(currentDate, 10);
+//        if (restaurantWithTodayMenu == null) {
+//            throw new IllegalArgumentException("This restaurant doesn't have menu for today");
+//        }
+//        LocalTime currentTime = LocalTime.now();
+//        LocalTime voteLimit = LocalTime.of(11, 0, 0);
+//        Vote todayVoteFromDb = voteRepository.getByDateAndUserId(currentDate, userId);
+//        User user = userRepository.findById(userId).orElseThrow();
+//        Vote newVote = new Vote(currentDate, user, restaurantWithTodayMenu);
+//        Vote savedVote;
+//        if (todayVoteFromDb == null) {
+//            savedVote = voteRepository.save(newVote);
+//        } else if (currentTime.isBefore(voteLimit)) {
+//            voteRepository.delete(todayVoteFromDb);
+//            savedVote = voteRepository.save(newVote);
+//        } else {
+//            throw new IllegalArgumentException("You can vote again only before 11:00 AM");
+//        }
+//        return vote;
+//    }
 }

@@ -13,4 +13,6 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
 
     @Query("SELECT m FROM Meal m WHERE m.menu.id=:menuId")
     List<Meal> getAllMealsForMenu(@Param("menuId") int menuId);
+
+
 }
