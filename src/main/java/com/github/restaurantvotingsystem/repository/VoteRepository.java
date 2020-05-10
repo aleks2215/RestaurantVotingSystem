@@ -15,7 +15,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v FROM Vote v WHERE v.date=:date and v.user.id=:userId")
     Vote getByDateAndUserId(@Param("date") LocalDate date, @Param("userId") int userId);
 
-    @Query("SELECT v FROM Vote v " +
-            "JOIN FETCH v.restaurant ")
+    @Query("SELECT v FROM Vote v JOIN FETCH v.restaurant ")
     List<Vote> getAllWithRestaurant();
 }

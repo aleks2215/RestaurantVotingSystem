@@ -73,6 +73,7 @@ public class RestaurantController {
 
     @GetMapping("/admin/restaurants/history")
     public List<Restaurant> getHistory() {
+        log.info("get restaurant history with menus and meals");
         List<Restaurant> restaurants = restaurantRepository.getAllWithMenusAndMeals();
         return restaurants;
     }

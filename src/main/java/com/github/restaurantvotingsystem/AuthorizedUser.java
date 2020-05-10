@@ -1,6 +1,5 @@
 package com.github.restaurantvotingsystem;
 
-
 import com.github.restaurantvotingsystem.model.User;
 import com.github.restaurantvotingsystem.to.UserTo;
 import com.github.restaurantvotingsystem.util.UserUtil;

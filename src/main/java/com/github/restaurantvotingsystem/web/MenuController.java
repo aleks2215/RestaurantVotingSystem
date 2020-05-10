@@ -1,8 +1,6 @@
 package com.github.restaurantvotingsystem.web;
 
-import com.github.restaurantvotingsystem.model.Meal;
 import com.github.restaurantvotingsystem.model.Menu;
-import com.github.restaurantvotingsystem.model.Restaurant;
 import com.github.restaurantvotingsystem.repository.MenuRepository;
 import com.github.restaurantvotingsystem.repository.RestaurantRepository;
 import com.github.restaurantvotingsystem.util.ValidationUtil;

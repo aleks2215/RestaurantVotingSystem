@@ -3,17 +3,11 @@ package com.github.restaurantvotingsystem.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
 @Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx")})
 public class Restaurant extends AbstractNamedEntity {
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    @NotNull
-//    private User user;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
@@ -41,14 +35,6 @@ public class Restaurant extends AbstractNamedEntity {
         this.votes = votes;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-//
     @Override
     public String toString() {
         return "Restaurant{" +

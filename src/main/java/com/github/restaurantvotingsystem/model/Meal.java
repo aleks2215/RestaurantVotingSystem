@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "meals_unique_name_idx")})

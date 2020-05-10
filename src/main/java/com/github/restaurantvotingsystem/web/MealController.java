@@ -1,7 +1,6 @@
 package com.github.restaurantvotingsystem.web;
 
 import com.github.restaurantvotingsystem.model.Meal;
-import com.github.restaurantvotingsystem.model.Menu;
 import com.github.restaurantvotingsystem.repository.MealRepository;
 import com.github.restaurantvotingsystem.repository.MenuRepository;
 import com.github.restaurantvotingsystem.util.ValidationUtil;
@@ -13,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URI;
 import java.util.List;
 
