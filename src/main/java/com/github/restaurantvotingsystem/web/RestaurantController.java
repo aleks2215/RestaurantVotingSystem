@@ -21,56 +21,59 @@ import java.util.List;
 @RestController
 @RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantController {
-    static final String REST_URL = "/rest/restaurants";
+    static final String REST_URL = "/rest";
     private final Logger log = LoggerFactory.getLogger(RestaurantController.class);
-
-    @Autowired
-    private RestaurantService restaurantService;
 
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-//    @GetMapping
-//    public List<Restaurant> getAll() {
-//        log.info("get all restaurants");
-//        return restaurantService.getAll();
-//    }
+    @GetMapping("/admin/restaurants/{id}")
+    public Restaurant get(@PathVariable int id) {
+        log.info("get restaurant by id={}", id);
+        return ValidationUtil.checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
+    }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/admin/restaurants")
+    public List<Restaurant> getAll() {
+        log.info("get all restaurants");
+        return restaurantRepository.getAll();
+    }
+
+    @DeleteMapping("/admin/restaurants/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
+        log.info("delete restaurant by id={}", id);
         ValidationUtil.checkNotFoundWithId(restaurantRepository.delete(id), id);
     }
 
-
-    @GetMapping
+    @GetMapping("/profile/restaurants")
     public List<Restaurant> getAllWithTodayMenuAndMeals() {
         List<Restaurant> restaurants = restaurantRepository.getAllWithTodayMenuAndMeals(LocalDate.now());
         return restaurants;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/restaurants", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
-        log.info("create restaurant");
+        log.info("create restaurant {}", restaurant);
         ValidationUtil.checkNew(restaurant);
         Restaurant newRestaurant = restaurantRepository.save(restaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+                .path(REST_URL + "/admin/restaurants/{id}")
                 .buildAndExpand(newRestaurant.getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(newRestaurant);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/restaurants/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
-        log.info("update {}", restaurant);
+        log.info("update restaurant {} with id {}", restaurant, id);
         restaurantRepository.save(restaurant);
     }
 
-    @GetMapping("/history")
+    @GetMapping("/admin/restaurants/history")
     public List<Restaurant> getHistory() {
         List<Restaurant> restaurants = restaurantRepository.getAllWithMenusAndMeals();
         return restaurants;

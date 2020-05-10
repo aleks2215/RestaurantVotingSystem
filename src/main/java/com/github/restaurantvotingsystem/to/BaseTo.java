@@ -1,8 +1,9 @@
 package com.github.restaurantvotingsystem.to;
 
+import com.github.restaurantvotingsystem.HasId;
 import org.springframework.util.Assert;
 
-public abstract class BaseTo {
+public abstract class BaseTo implements HasId {
     protected Integer id;
 
     public BaseTo() {
@@ -12,17 +13,13 @@ public abstract class BaseTo {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    // doesn't work for hibernate lazy proxy
-    public int id() {
-        Assert.notNull(getId(), "Entity must has id");
-        return getId();
     }
 }

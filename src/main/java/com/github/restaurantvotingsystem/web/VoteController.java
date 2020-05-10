@@ -32,7 +32,7 @@ public class VoteController {
 
     @PostMapping
     public Vote voting(@RequestParam int restaurantId) {
-        return voteService.voting(SecurityUtil.getUserId(), restaurantId);
+        return voteService.voting(SecurityUtil.authUserId(), restaurantId);
     }
 
 //    public Vote create(@RequestParam int restaurantId) {

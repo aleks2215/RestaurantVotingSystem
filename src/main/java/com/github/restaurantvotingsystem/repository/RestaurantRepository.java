@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-    @Query("SELECT r FROM Restaurant r")
+    @Query("SELECT r FROM Restaurant r ORDER BY r.name")
     List<Restaurant> getAll();
 
     @Query("SELECT DISTINCT r FROM Restaurant r " +
