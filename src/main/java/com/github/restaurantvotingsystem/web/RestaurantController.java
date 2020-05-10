@@ -1,9 +1,7 @@
 package com.github.restaurantvotingsystem.web;
 
-import com.github.restaurantvotingsystem.model.Meal;
 import com.github.restaurantvotingsystem.model.Restaurant;
 import com.github.restaurantvotingsystem.repository.RestaurantRepository;
-import com.github.restaurantvotingsystem.service.RestaurantService;
 import com.github.restaurantvotingsystem.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +67,7 @@ public class RestaurantController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
-        log.info("update restaurant {} with id {}", restaurant, id);
+        log.info("update restaurant {} with id={}", restaurant, id);
         restaurantRepository.save(restaurant);
     }
 

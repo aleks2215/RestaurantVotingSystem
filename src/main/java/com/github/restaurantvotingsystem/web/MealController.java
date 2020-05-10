@@ -17,13 +17,14 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
+import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
 @RequestMapping(value = MealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealController {
-    static final String REST_URL = "/rest/meals";
+    static final String REST_URL = "/rest/admin/meals";
     private static final Logger log = getLogger(MealController.class);
 
     @Autowired
@@ -32,10 +33,22 @@ public class MealController {
     @Autowired
     private MenuRepository menuRepository;
 
+    @GetMapping("/{id}")
+    public Meal get(@PathVariable int id) {
+        log.info("get meal by id={}", id);
+        return ValidationUtil.checkNotFoundWithId(mealRepository.findById(id).orElse(null), id);
+    }
+
+    @GetMapping
+    public List<Meal> getAll() {
+        log.info("get all menus");
+        return mealRepository.getAll();
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        log.info("delete meal {}", id);
+        log.info("delete meal by id={}", id);
         ValidationUtil.checkNotFoundWithId(mealRepository.delete(id), id);
     }
 
@@ -57,7 +70,7 @@ public class MealController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Meal meal, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(meal, id);
-        log.info("update {}", meal);
+        log.info("update meal {} by id={}", meal, id);
         mealRepository.save(meal);
     }
 }

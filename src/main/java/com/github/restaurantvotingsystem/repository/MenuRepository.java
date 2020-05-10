@@ -18,6 +18,9 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query("SELECT m FROM Menu m WHERE m.date=:date")
     List<Menu> findByDate(@Param("date") LocalDate date);
 
+    @Query("SELECT m FROM Menu m ORDER BY m.date")
+    List<Menu> getAll();
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Menu m WHERE m.id=:id")

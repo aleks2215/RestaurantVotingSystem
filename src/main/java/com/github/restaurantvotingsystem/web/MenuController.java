@@ -2,6 +2,7 @@ package com.github.restaurantvotingsystem.web;
 
 import com.github.restaurantvotingsystem.model.Meal;
 import com.github.restaurantvotingsystem.model.Menu;
+import com.github.restaurantvotingsystem.model.Restaurant;
 import com.github.restaurantvotingsystem.repository.MenuRepository;
 import com.github.restaurantvotingsystem.repository.RestaurantRepository;
 import com.github.restaurantvotingsystem.util.ValidationUtil;
@@ -21,7 +22,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @RestController
 @RequestMapping(value = MenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MenuController {
-    static final String REST_URL = "/rest/menus";
+    static final String REST_URL = "/rest/admin/menus";
     private static final Logger log = getLogger(MenuController.class);
 
     @Autowired
@@ -30,9 +31,22 @@ public class MenuController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
+    @GetMapping("/{id}")
+    public Menu get(@PathVariable int id) {
+        log.info("get restaurant by id={}", id);
+        return ValidationUtil.checkNotFoundWithId(menuRepository.findById(id).orElse(null), id);
+    }
+
+    @GetMapping
+    public List<Menu> getAll() {
+        log.info("get all menus");
+        return menuRepository.getAll();
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
+        log.info("delete menu by id={}", id);
         ValidationUtil.checkNotFoundWithId(menuRepository.delete(id), id);
     }
 
@@ -54,7 +68,7 @@ public class MenuController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Menu menu, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(menu, id);
-        log.info("update {}", menu);
+        log.info("update menu {} with id={}", menu, id);
         menuRepository.save(menu);
     }
 }
