@@ -16,7 +16,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  * @link https://github.com/FasterXML/jackson-datatype-hibernate
  * @link https://github.com/FasterXML/jackson-docs/wiki/JacksonHowToCustomSerializers
  */
-//converter for json serialization for fields access and DataTime Api (Java8)
+//converter for json serialization via fields access and DataTime Api (Java8)
 public class JacksonObjectMapper extends ObjectMapper {
 
     private JacksonObjectMapper() {

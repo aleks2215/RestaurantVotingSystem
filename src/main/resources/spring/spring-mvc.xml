@@ -9,12 +9,13 @@
     <!--scan annotations inside controllers-->
     <mvc:annotation-driven>
         <mvc:message-converters>
+            <!--custom converter for jackson-->
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper">
                     <bean class="com.github.restaurantvotingsystem.web.json.JacksonObjectMapper"/>
                 </property>
             </bean>
-
+            <!--custom converter for utf8-->
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
@@ -28,10 +29,10 @@
 
     <context:component-scan base-package="com.github.**.web"/>
 
-<!--    &lt;!&ndash;  all resources inside folder src/main/webapp/resources are mapped so they can be referred to inside JSP files &ndash;&gt;-->
-<!--    <mvc:resources mapping="/resources/**" location="/resources/"/>-->
+    <!--    &lt;!&ndash;  all resources inside folder src/main/webapp/resources are mapped so they can be referred to inside JSP files &ndash;&gt;-->
+    <!--    <mvc:resources mapping="/resources/**" location="/resources/"/>-->
 
-<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
-<!--          p:prefix="/WEB-INF/jsp/"-->
-<!--          p:suffix=".jsp"/>-->
+    <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+    <!--          p:prefix="/WEB-INF/jsp/"-->
+    <!--          p:suffix=".jsp"/>-->
 </beans>

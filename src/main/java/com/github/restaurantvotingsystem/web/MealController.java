@@ -67,6 +67,7 @@ public class MealController {
     public void update(@RequestBody Meal meal, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(meal, id);
         log.info("update meal {} by id={}", meal, id);
+        meal.setMenu(menuRepository.getByMealId(meal.getId()));
         mealRepository.save(meal);
     }
 }

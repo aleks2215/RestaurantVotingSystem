@@ -35,6 +35,15 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "JOIN FETCH menu.meals meal ")
     List<Restaurant> getAllWithMenusAndMeals();
 
+    @Query("SELECT r FROM Restaurant r " +
+            "LEFT JOIN r.menus menu WHERE menu.id=:menuId")
+    Restaurant getByMenuId(@Param("menuId") int menuId);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Restaurant r SET r.name=:name WHERE r.id=:id")
+    void updateById(@Param("id") int id, @Param("name") String name);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Restaurant r WHERE r.id=:id")
