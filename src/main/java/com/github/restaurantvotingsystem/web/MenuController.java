@@ -67,10 +67,6 @@ public class MenuController {
     public void update(@RequestBody Menu menu, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(menu, id);
         log.info("update menu {} with id={}", menu, id);
-        menu.setRestaurant(restaurantRepository.getByMenuId(menu.getId()));
-//        Menu managedMenu = menuRepository.findById(menu.getId()).orElse(null);
-//        managedMenu.setDate(menu.getDate());
-        menuRepository.save(menu);
-//        menuRepository.updateById(id, menu.getDate());
+        menuRepository.updateById(id, menu.getDate());
     }
 }

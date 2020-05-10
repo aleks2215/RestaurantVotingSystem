@@ -68,7 +68,7 @@ public class RestaurantController {
     public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
         log.info("update restaurant {} with id={}", restaurant, id);
-        restaurantRepository.save(restaurant);
+        restaurantRepository.updateById(id, restaurant.getName());
     }
 
     @GetMapping("/admin/restaurants/history")

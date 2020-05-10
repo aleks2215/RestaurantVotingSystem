@@ -18,10 +18,6 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query("SELECT m FROM Menu m ORDER BY m.date")
     List<Menu> getAll();
 
-    @Query("SELECT m FROM Menu m " +
-            "LEFT JOIN m.meals meal WHERE meal.id=:mealId")
-    Menu getByMealId(@Param("mealId") int mealId);
-
     @Transactional
     @Modifying
     @Query("UPDATE Menu m SET m.date=:date WHERE m.id=:id")
