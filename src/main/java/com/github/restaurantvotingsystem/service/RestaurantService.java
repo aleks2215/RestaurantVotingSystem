@@ -37,26 +37,17 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    @Transactional
-    public Restaurant save(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
+//    @Transactional
+//    public Restaurant save(Restaurant restaurant) {
+//        return restaurantRepository.save(restaurant);
+//    }
 
-    @Transactional
-    public Menu saveMenu(Menu menu, int restaurantId) {
-        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
-        return menuRepository.save(menu);
-    }
+//    @Transactional
+//    public Menu saveMenu(Menu menu, int restaurantId) {
+//        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
+//        return menuRepository.save(menu);
+//    }
 
-
-    public List<Meal> getAllMeals() {
-        List<Meal> meals = mealRepository.getAllMealsForMenu(100004);
-        meals.forEach(meal -> {
-            meal.setMenu(null);
-        });
-
-        return meals;
-    }
 
 //    public List<Restaurant> getAllWithTodayMenuAndMeals() {
 //        restaurantRepository.findAll()

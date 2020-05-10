@@ -19,7 +19,6 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private Set<Menu> menus;
 
-    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Vote> votes;
 
@@ -50,11 +49,11 @@ public class Restaurant extends AbstractNamedEntity {
 //        this.user = user;
 //    }
 //
-//    @Override
-//    public String toString() {
-//        return "Restaurant{" +
-//                "name='" + name + '\'' +
-//                ", id=" + id +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

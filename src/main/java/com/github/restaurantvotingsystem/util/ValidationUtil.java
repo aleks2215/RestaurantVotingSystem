@@ -12,6 +12,10 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
+    public static void checkNotFoundWithId(int returnedValue, int id) {
+        checkNotFoundWithId(returnedValue != 0, id);
+    }
+
     public static <T> T checkNotFoundWithId(T object, int id) {
         checkNotFoundWithId(object != null, id);
         return object;

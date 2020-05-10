@@ -1,4 +1,4 @@
-package com.github.restaurantvotingsystem.util;
+package com.github.restaurantvotingsystem.web;
 
 public class SecurityUtil {
     public static Integer getUserId() {

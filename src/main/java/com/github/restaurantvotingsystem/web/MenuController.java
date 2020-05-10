@@ -1,11 +1,13 @@
 package com.github.restaurantvotingsystem.web;
 
+import com.github.restaurantvotingsystem.model.Meal;
 import com.github.restaurantvotingsystem.model.Menu;
 import com.github.restaurantvotingsystem.repository.MenuRepository;
 import com.github.restaurantvotingsystem.repository.RestaurantRepository;
 import com.github.restaurantvotingsystem.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +30,11 @@ public class MenuController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-//    @GetMapping("/history")
-//    public List<Menu> getHistory(){
-//        List<Menu> menu = menuRepository.getAllWithRestaurantsVotesAndMeals();
-//        return menu;
-//    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        ValidationUtil.checkNotFoundWithId(menuRepository.delete(id), id);
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> create(@RequestParam Integer restaurantId, @RequestBody Menu menu) {
@@ -46,5 +48,13 @@ public class MenuController {
                 .buildAndExpand(newMenu.getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(newMenu);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Menu menu, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(menu, id);
+        log.info("update {}", menu);
+        menuRepository.save(menu);
     }
 }

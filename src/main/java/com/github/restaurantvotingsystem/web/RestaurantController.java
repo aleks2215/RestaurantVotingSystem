@@ -1,12 +1,9 @@
 package com.github.restaurantvotingsystem.web;
 
 import com.github.restaurantvotingsystem.model.Meal;
-import com.github.restaurantvotingsystem.model.Menu;
 import com.github.restaurantvotingsystem.model.Restaurant;
-import com.github.restaurantvotingsystem.model.Vote;
 import com.github.restaurantvotingsystem.repository.RestaurantRepository;
 import com.github.restaurantvotingsystem.service.RestaurantService;
-import com.github.restaurantvotingsystem.util.SecurityUtil;
 import com.github.restaurantvotingsystem.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,46 +30,44 @@ public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @GetMapping
-    public List<Restaurant> getAll() {
-        log.info("get all restaurants");
-        return restaurantService.getAll();
-    }
-
-    @GetMapping("/meals")
-    public List<Meal> getAllMeals() {
-        return restaurantService.getAllMeals();
-    }
-
 //    @GetMapping
-//    public List<Restaurant> getAllWithTodayMenuAndMeals() {
-//        List<Restaurant> restaurants = restaurantService.getAllWithTodayMenuAndMeals();
-//        return restaurants;
+//    public List<Restaurant> getAll() {
+//        log.info("get all restaurants");
+//        return restaurantService.getAll();
 //    }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        ValidationUtil.checkNotFoundWithId(restaurantRepository.delete(id), id);
+    }
 
-//    @PostMapping(value = "/{restaurantId}/vote")
-//    public ResponseEntity<Vote> create(@PathVariable int restaurantId) {
-//        Vote newVote = restaurantService.create(restaurantId, SecurityUtil.getUserId());
-//
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(REST_URL + "/{restaurantId}/vote/{id}")
-//                .buildAndExpand(newVote.getId()).toUri();
-//
-//        return ResponseEntity.created(uriOfNewResource).body(newVote);
-//    }
+
+    @GetMapping
+    public List<Restaurant> getAllWithTodayMenuAndMeals() {
+        List<Restaurant> restaurants = restaurantRepository.getAllWithTodayMenuAndMeals(LocalDate.now());
+        return restaurants;
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         log.info("create restaurant");
         ValidationUtil.checkNew(restaurant);
-        Restaurant newRestaurant = restaurantService.save(restaurant);
+        Restaurant newRestaurant = restaurantRepository.save(restaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(newRestaurant.getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(newRestaurant);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(restaurant, id);
+        log.info("update {}", restaurant);
+        restaurantRepository.save(restaurant);
     }
 
     @GetMapping("/history")
