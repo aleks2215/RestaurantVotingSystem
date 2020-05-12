@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -49,9 +50,9 @@ public class MealController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Meal> create(@RequestParam Integer menuId, @RequestBody Meal meal) {
+    public ResponseEntity<Meal> create(@Valid @RequestBody Meal meal, @RequestParam Integer menuId) {
         ValidationUtil.checkNew(meal);
-        log.info("create {} for menu {}", meal, menuId);
+        log.info("create {} for menu id={}", meal, menuId);
         meal.setMenu(menuRepository.getOne(menuId));
         Meal newMeal = mealRepository.save(meal);
 
@@ -64,7 +65,7 @@ public class MealController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Meal meal, @PathVariable int id) {
+    public void update(@Valid @RequestBody Meal meal, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(meal, id);
         log.info("update meal {} by id={}", meal, id);
         mealRepository.updateById(id, meal.getName(), meal.getPrice());

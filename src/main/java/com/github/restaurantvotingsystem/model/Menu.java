@@ -28,7 +28,6 @@ public class Menu extends AbstractBaseEntity {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @NotNull
     private Restaurant restaurant;
 
     public Menu() {

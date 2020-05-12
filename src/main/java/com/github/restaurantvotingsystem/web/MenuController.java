@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class MenuController {
 
     @GetMapping("/{id}")
     public Menu get(@PathVariable int id) {
-        log.info("get restaurant by id={}", id);
+        log.info("get menu by id={}", id);
         return ValidationUtil.checkNotFoundWithId(menuRepository.findById(id).orElse(null), id);
     }
 
@@ -49,8 +50,8 @@ public class MenuController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Menu> create(@RequestParam Integer restaurantId, @RequestBody Menu menu) {
-        log.info("create menu");
+    public ResponseEntity<Menu> create(@Valid @RequestBody Menu menu, @RequestParam Integer restaurantId) {
+        log.info("create {} for restaurant id={}", menu, restaurantId);
         ValidationUtil.checkNew(menu);
         menu.setRestaurant(restaurantRepository.getOne(restaurantId));
         Menu newMenu = menuRepository.save(menu);
@@ -64,9 +65,9 @@ public class MenuController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Menu menu, @PathVariable int id) {
+    public void update(@Valid @RequestBody Menu menu, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(menu, id);
-        log.info("update menu {} with id={}", menu, id);
+        log.info("update {} with id={}", menu, id);
         menuRepository.updateById(id, menu.getDate());
     }
 }

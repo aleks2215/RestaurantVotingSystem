@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -51,7 +52,7 @@ public class RestaurantController {
     }
 
     @PostMapping(value = "/admin/restaurants", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant) {
         log.info("create restaurant {}", restaurant);
         ValidationUtil.checkNew(restaurant);
         Restaurant newRestaurant = restaurantRepository.save(restaurant);
@@ -65,12 +66,12 @@ public class RestaurantController {
 
     @PutMapping(value = "/admin/restaurants/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
-        log.info("update restaurant {} with id={}", restaurant, id);
+        log.info("update {} with id={}", restaurant, id);
         restaurantRepository.updateById(id, restaurant.getName());
     }
-
+    
     @GetMapping("/admin/restaurants/history")
     public List<Restaurant> getHistory() {
         log.info("get restaurant history with menus and meals");

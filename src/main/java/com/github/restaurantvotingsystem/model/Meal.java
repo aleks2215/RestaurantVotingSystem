@@ -1,6 +1,7 @@
 package com.github.restaurantvotingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,12 +12,12 @@ import java.math.BigDecimal;
 public class Meal extends AbstractNamedEntity {
     @Column(name = "price", nullable = false)
     @NotNull
+    @Range(min = 10, max = 5000)
     private BigDecimal price;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id", nullable = false)
-    @NotNull
     private Menu menu;
 
     public Meal() {
