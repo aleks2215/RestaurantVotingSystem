@@ -1,5 +1,7 @@
 package com.github.restaurantvotingsystem.web;
 
+import com.github.restaurantvotingsystem.util.ValidationUtil;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,7 +18,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 @ControllerAdvice(annotations = RestController.class)
-public class BeanValidator {
+public class ExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -27,5 +29,11 @@ public class BeanValidator {
             errors.put(fieldName, errorMessage);
         });
         return ResponseEntity.unprocessableEntity().body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> conflict(DataIntegrityViolationException e) {
+        String rootMsg = ValidationUtil.getRootCause(e).getMessage();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(rootMsg);
     }
 }

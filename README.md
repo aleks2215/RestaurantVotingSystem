@@ -83,5 +83,8 @@ User
 #### get all restaurants with today menu and meals for voting
 `curl -s http://localhost:8080/restaurantvotingsystem/rest/profile/restaurants --user user@yandex.ru:password`
 
+#### get today user vote with restaurant
+`curl -s http://localhost:8080/restaurantvotingsystem/rest/profile/votes --user user@yandex.ru:password`
+
 #### voting
 `curl -s -X POST http://localhost:8080/restaurantvotingsystem/rest/profile/votes?restaurantId=100003 --user user@yandex.ru:password`

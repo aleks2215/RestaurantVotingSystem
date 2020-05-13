@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -30,9 +31,16 @@ public class VoteController {
         return voteService.voting(SecurityUtil.authUserId(), restaurantId);
     }
 
+    @GetMapping("/profile/votes")
+    public Vote getTodayUserVoteWithRestaurantByDate() {
+        log.info("get today vote for user id={}", SecurityUtil.authUserId());
+        return voteService.getVoteWithRestaurantByDateAndUserId(LocalDate.now(),SecurityUtil.authUserId());
+    }
+
     @GetMapping("/admin/votes/history")
     public List<Vote> getVotesHistory() {
         log.info("get votes history with restaurant");
-        return voteRepository.getAllWithRestaurant();
+        List<Vote> votes = voteRepository.getAllWithRestaurant();
+        return votes;
     }
 }
