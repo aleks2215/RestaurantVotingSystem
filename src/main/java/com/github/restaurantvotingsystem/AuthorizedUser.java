@@ -1,33 +1,18 @@
 package com.github.restaurantvotingsystem;
 
 import com.github.restaurantvotingsystem.model.User;
-import com.github.restaurantvotingsystem.to.UserTo;
-import com.github.restaurantvotingsystem.util.UserUtil;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
     private static final long serialVersionUID = 1L;
 
-    private UserTo userTo;
+    private Integer userId;
 
     public AuthorizedUser(User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
-        this.userTo = UserUtil.asTo(user);
+        userId = user.getId();
     }
 
     public int getId() {
-        return userTo.id();
-    }
-
-    public void update(UserTo newTo) {
-        userTo = newTo;
-    }
-
-    public UserTo getUserTo() {
-        return userTo;
-    }
-
-    @Override
-    public String toString() {
-        return userTo.toString();
+        return userId;
     }
 }
