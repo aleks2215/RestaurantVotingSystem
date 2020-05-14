@@ -23,6 +23,11 @@ public class Meal extends AbstractNamedEntity {
     public Meal() {
     }
 
+    public Meal(Integer id, String name, @NotNull @Range(min = 10, max = 5000) BigDecimal price) {
+        super(id, name);
+        this.price = price;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }

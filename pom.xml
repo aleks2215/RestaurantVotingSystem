@@ -138,25 +138,19 @@
         </dependency>
 
         <!--https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.glassfish.jaxb</groupId>-->
-        <!--            <artifactId>jaxb-runtime</artifactId>-->
-        <!--            <version>2.4.0-b180830.0438</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.4.0-b180830.0438</version>
+        </dependency>
 
         <!--Web-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.tomcat</groupId>-->
-        <!--            <artifactId>tomcat-servlet-api</artifactId>-->
-        <!--            <version>${tomcat.version}</version>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>javax.servlet</groupId>-->
-        <!--            <artifactId>jstl</artifactId>-->
-        <!--            <version>1.2</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -182,23 +176,23 @@
         </dependency>
 
         <!--Test-->
-        <!--        <dependency>-->
-        <!--            <groupId>junit</groupId>-->
-        <!--            <artifactId>junit</artifactId>-->
-        <!--            <version>${junit.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-test</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.assertj</groupId>-->
-        <!--            <artifactId>assertj-core</artifactId>-->
-        <!--            <version>3.15.0</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.15.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

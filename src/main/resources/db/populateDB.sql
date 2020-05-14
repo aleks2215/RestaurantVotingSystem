@@ -31,8 +31,8 @@ VALUES ('Rush-Hour'),
        ('Tashir');
 
 INSERT INTO menus(date, restaurant_id)
-VALUES ('2020-05-13', 100003),
-       ('2020-05-13', 100004),
+VALUES ('2020-05-14', 100003),
+       ('2020-05-14', 100004),
        ('2020-05-08', 100004);
 
 -- INSERT INTO meals (name, price, menu_id)
