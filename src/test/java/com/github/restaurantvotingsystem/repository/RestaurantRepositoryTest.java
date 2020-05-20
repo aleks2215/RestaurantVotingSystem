@@ -1,18 +1,16 @@
 package com.github.restaurantvotingsystem.repository;
 
-import com.github.restaurantvotingsystem.TestData;
 import com.github.restaurantvotingsystem.TestUtil;
-import com.github.restaurantvotingsystem.model.Menu;
 import com.github.restaurantvotingsystem.model.Restaurant;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.github.restaurantvotingsystem.TestData.*;
-import static org.junit.Assert.*;
+
 
 public class RestaurantRepositoryTest extends AbstractRepositoryTest {
 
@@ -55,6 +53,6 @@ public class RestaurantRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void delete() {
         restaurantRepository.delete(RESTAURANT1.getId());
-        Assert.assertNull(restaurantRepository.findById(RESTAURANT1.getId()).orElse(null));
+        Assertions.assertNull(restaurantRepository.findById(RESTAURANT1.getId()).orElse(null));
     }
 }

@@ -24,8 +24,8 @@ public class TestData {
 
     public static final Restaurant RESTAURANT1 = new Restaurant(100003, "Rush-Hour");
     public static final Restaurant RESTAURANT2 = new Restaurant(100004, "Tashir");
-    public static final Menu MENU1 = new Menu(100005, LocalDate.now());
-    public static final Menu MENU2 = new Menu(100006, LocalDate.now());
+    public static final Menu MENU1 = new Menu(100005, LocalDate.of(2020, 5, 14));
+    public static final Menu MENU2 = new Menu(100006, LocalDate.of(2020, 5, 14));
     public static final Menu MENU3 = new Menu(100007, LocalDate.of(2020, 5, 8));
     public static final Meal MEAL1 = new Meal(100008, "Pork", BigDecimal.valueOf(1000));
     public static final Meal MEAL2 = new Meal(100009, "Steak Vesuvius", BigDecimal.valueOf(350));
