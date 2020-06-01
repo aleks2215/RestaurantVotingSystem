@@ -1,5 +1,6 @@
 package com.github.restaurantvotingsystem;
 
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
@@ -31,15 +32,15 @@ public class TestMatcher<T> {
         assertThat(actual).usingElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(expected);
     }
 
-//    public ResultMatcher contentJson(T expected) {
-//        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
-//    }
-//
-//    public ResultMatcher contentJson(T... expected) {
-//        return contentJson(List.of(expected));
-//    }
-//
-//    public ResultMatcher contentJson(Iterable<T> expected) {
-//        return result -> assertMatch(readListFromJsonMvcResult(result, clazz), expected);
-//    }
+    public ResultMatcher contentJson(T expected) {
+        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
+    }
+
+    public ResultMatcher contentJson(T... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public ResultMatcher contentJson(Iterable<T> expected) {
+        return result -> assertMatch(TestUtil.readListFromJsonMvcResult(result, clazz), expected);
+    }
 }

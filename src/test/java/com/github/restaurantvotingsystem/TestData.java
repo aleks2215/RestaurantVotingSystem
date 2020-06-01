@@ -1,9 +1,6 @@
 package com.github.restaurantvotingsystem;
 
-import com.github.restaurantvotingsystem.model.Meal;
-import com.github.restaurantvotingsystem.model.Menu;
-import com.github.restaurantvotingsystem.model.Restaurant;
-import com.github.restaurantvotingsystem.model.Vote;
+import com.github.restaurantvotingsystem.model.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +18,9 @@ public class TestData {
             TestMatcher.usingFieldsComparator(Meal.class, "menu");
     public static TestMatcher<Vote> voteTestMatcher =
             TestMatcher.usingFieldsComparator(Vote.class, "user", "restaurant");
+
+    public static final User USER = new User(100000, "User", "user@yandex.ru", "password",  Role.ROLE_USER);
+    public static final User ADMIN = new User(100001, "Admin", "admin@gmail.com", "admin",  Role.ROLE_ADMIN);
 
     public static final Restaurant RESTAURANT1 = new Restaurant(100003, "Rush-Hour");
     public static final Restaurant RESTAURANT2 = new Restaurant(100004, "Tashir");

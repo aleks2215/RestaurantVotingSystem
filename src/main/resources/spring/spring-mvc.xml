@@ -6,14 +6,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <bean class="com.github.restaurantvotingsystem.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
+
     <!--scan annotations inside controllers-->
     <mvc:annotation-driven>
         <mvc:message-converters>
             <!--custom converter for jackson-->
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="objectMapper">
-                    <bean class="com.github.restaurantvotingsystem.web.json.JacksonObjectMapper"/>
-                </property>
+                <property name="objectMapper" ref="objectMapper"/>
             </bean>
             <!--custom converter for utf8-->
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
